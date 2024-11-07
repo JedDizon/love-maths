@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     for (let button of buttons) {
         button.addEventListener("click", function () {
             if (this.getAttribute("data-type") === "submit") {
-                alert("You clicked Submit!");
+                checkAnswer();
             } else {
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
@@ -30,7 +30,7 @@ function runGame(gameType) {
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
 
-    //checks for what game type
+    //checks for addition game type
     if (gameType === 'addition') {
         displayAdditionQuestion(num1, num2)
     } else {
@@ -44,8 +44,22 @@ function checkAnswer() {
 
 }
 
-function calculateCorrectAnswer() {
 
+/**
+ * Gets the operands (the numbers) and the operator (plus, minus, etc)
+ * directly from the DOM, and returns the correct answer 
+ */
+function calculateCorrectAnswer() {
+    let operand1 = parseInt(document.getElementById('operand1').innertext);
+    let operand2 = parseInt(document.getElementById('operand2').innertext);
+    let operator = document.getElementById('operator').innertext;
+
+    if (operator === '+') {
+        return [operand1 + operand2, 'addition'];
+    } else {
+        alert(`Unimplemented oprator: ${operator}`);
+        throw `Unimplemented oprator: ${operator}. Aborting!`;
+    }
 }
 
 function incrementScore() {
